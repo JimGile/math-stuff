@@ -113,11 +113,24 @@ def eq2(x, y):
     return -3*x + 2*y + 1
 
 
+# Define the 3 equations for the line intersections between each pair of surfaces
+def eq0_1(x):
+    return -4/7*x + 3/7
+
+
+def eq1_2(x):
+    return 10/9*x - 5/9
+
+
+def eq2_0(x):
+    return 7*x - 4
+
+
 # Plot the three 3D surface equations along with a marker for the solution:
 # Define the ranges for x and y
-X = np.arange(-1, 2, 0.25)
+x_range = np.arange(-1, 2, 0.25)
 Y = np.arange(-1, 2, 0.25)
-X, Y = np.meshgrid(X, Y)
+X, Y = np.meshgrid(x_range, Y)
 
 # Prepare 3D figure and label axes
 ax = plt.figure().add_subplot(projection='3d')
@@ -125,10 +138,18 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
 
-# Plot the equations
+# Plot the surface equations
 ax.plot_surface(X, Y, eq0(X, Y), color='r', alpha=0.2, label='eq0')
 ax.plot_surface(X, Y, eq1(X, Y), color='g', alpha=0.2, label='eq1')
 ax.plot_surface(X, Y, eq2(X, Y), color='b', alpha=0.2, label='eq2')
+
+# Plot the line intersections
+ax.plot(x_range, eq0_1(x_range), eq0(x_range, eq0_1(x_range)), color='r', label='Intersection eq0 and eq1')
+ax.plot(x_range, eq1_2(x_range), eq1(x_range, eq1_2(x_range)), color='g', label='Intersection eq1 and eq2')
+ax.plot(x_range, eq2_0(x_range), eq2(x_range, eq2_0(x_range)), color='b', label='Intersection eq2 and eq0')
+
+ax.set_ylim(-1, 2)
+
 
 # Plot the solution
 # ax.plot(x[0], x[1], x[2], 'o', markersize=2, color='k')
