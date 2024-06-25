@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from SystemOfEquations import FoSysEq
+
 
 # Using NumPy linalg.solve
 # Computes the "exact" solution, x, of the well-determined, full rank, linear matrix equation ax = b.
@@ -59,10 +61,10 @@ print(m, c)
 # (1.0 -0.95) # may vary
 
 # Plot the 2D data along with the fitted line:
-_ = plt.plot(x, y, 'o', label='Original data', markersize=10)
-_ = plt.plot(x, m*x + c, 'r', label='Fitted line')
-_ = plt.legend()
-plt.show()
+# _ = plt.plot(x, y, 'o', label='Original data', markersize=10)
+# _ = plt.plot(x, m*x + c, 'r', label='Fitted line')
+# _ = plt.legend()
+# plt.show()
 
 
 # Solve the following system of linear equations
@@ -156,4 +158,18 @@ ax.set_ylim(-1, 2)
 ax.plot(*x, 'o', markersize=2, color='k', label='Solution')
 ax.legend()
 
+plt.show()
+
+
+# Test 3d system of first order linear equations
+a_3d = np.array([[1, 3, -2], [2, 1, 4], [3, -2, 1]])
+b_3d = np.array([2, -1, 1])
+sys_eq_3d = FoSysEq(a_3d, b_3d)
+fig, ax = sys_eq_3d.plot_solution()
+
+ax.set_xlim(-4, 4)
+ax.set_ylim(-4, 4)
+ax.set_zlim(-20, 20)
+
+ax.legend()
 plt.show()
