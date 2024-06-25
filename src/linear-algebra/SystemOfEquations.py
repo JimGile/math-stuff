@@ -85,7 +85,7 @@ class FoSysEq:
         b_line = self.b / self.a[:, 1]
         return np.insert(a_line[:, :1], 1, b_line, axis=1)
 
-    def line_equation_2d(self, x: np.array, idx: int) -> np.array:
+    def line_equation(self, x: np.array, idx: int) -> np.array:
         return x*self.line_mat[idx, 0] + self.line_mat[idx, 1]
 
     def calc_3d_surface_equations_matix(self) -> np.array:
@@ -137,9 +137,6 @@ class FoSysEq:
             line_matrix[i] = np.array([a_line[0]/a_line[1]*-1, b_line/a_line[1]])
         return line_matrix
 
-    def line_intersection_equation(self, x: np.array, idx: int) -> np.array:
-        return x*self.line_mat[idx, 0] + self.line_mat[idx, 1]
-
     def plot_3d_solution(self) -> tuple[Figure, Axes]:
         # Prepare 3D figure and label axes
         fig = plt.figure()
@@ -155,7 +152,7 @@ class FoSysEq:
         for i in range(3):
             ax.plot_surface(X, Y, self.surface_equation(X, Y, i), color=self.colors[i], alpha=0.2, label=f'eq{i}')
             # Plot the line intersections
-            y = self.line_intersection_equation(self.x_range, i)
+            y = self.line_equation(self.x_range, i)
             ax.plot(self.x_range, y, self.surface_equation(self.x_range, y, i), color=self.colors[i])
 
         # Plot 3D solution point
@@ -173,7 +170,7 @@ class FoSysEq:
 
         # Plot 3D surfaces and intersection lines
         for i in range(2):
-            ax.plot(self.x_range, self.line_equation_2d(self.x_range, i), color=self.colors[i], label=f'eq{i}')
+            ax.plot(self.x_range, self.line_equation(self.x_range, i), color=self.colors[i], label=f'eq{i}')
 
         # Plot 2D solution point
         plt.plot(*self.x, 'o', markersize=5, color='k', label='Solution')

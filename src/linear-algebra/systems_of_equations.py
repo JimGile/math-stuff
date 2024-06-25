@@ -171,5 +171,5 @@ ax.set_xlim(-4, 4)
 ax.set_ylim(-4, 4)
 ax.set_zlim(-20, 20)
 
-ax.legend()
+ax.legend(loc='best')
 plt.show()
